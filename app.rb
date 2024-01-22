@@ -8,7 +8,7 @@ require "json"
 get("/") do
 
   # build the API url, including the API key in the query string
-  api_url = "http://api.exchangerate.host/list?access_key=" + ENV.fetch("EXCHANGE_RATE_KEY")
+  api_url = "http://api.exchangerate.host/list?access_key=" + ENV.fetch("EXCHANGE_RATES_KEY")
 
   # use HTTP.get to retrieve the API information
   raw_data = HTTP.get(api_url)
@@ -29,7 +29,7 @@ end
 get("/:from_curr") do
   @original_currency = params.fetch("from_curr")
 
-  api_url = "http://api.exchangerate.host/list?access_key=#{ENV["EXCHANGE_RATE_KEY"]}"
+  api_url = "http://api.exchangerate.host/list?access_key=#{ENV["EXCHANGE_RATES_KEY"]}"
 
   raw_data = HTTP.get(api_url)
   raw_data_string = raw_data.to_s
@@ -44,7 +44,7 @@ get("/:from_curr/:to_curr") do
   @original_currency = params.fetch("from_curr")
   @destination_currency = params.fetch("to_curr")
 
-  api_url = "http://api.exchangerate.host/convert?access_key=#{ENV["EXCHANGE_RATE_KEY"]}&from=#{@original_currency}&to=#{@destination_currency}&amount=1"
+  api_url = "http://api.exchangerate.host/convert?access_key=#{ENV["EXCHANGE_RATES_KEY"]}&from=#{@original_currency}&to=#{@destination_currency}&amount=1"
 
   raw_data = HTTP.get(api_url)
   raw_data_string = raw_data.to_s
